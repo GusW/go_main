@@ -339,7 +339,7 @@ Hash Table
 Structs
 
 - `class`
--      type struct Person {
+-      type Person struct {
          name string
          addr string
          phone string
@@ -353,3 +353,48 @@ Structs
 
        // struct literal
        p1 := Person(name: "Jane", addr: "Rosetta Av", phone: "dunno")
+
+---
+
+Packages (RFCs/protocols)
+
+- `net/http`=> web. `http.Get(www.whatever.com)`
+- `net` => tcp/ip `net.Dial("tcp", "www.hoho.com:8081"`
+- `encoding/json` => JSON manipulation
+  - json `marshalling` => transform go object into json object
+  -     p1 := Person(name: "joe", pass: "123")
+        // returns JSON representation as []byte
+        barr, err := json.Marshal(p1)
+  - json `unmarshalling` => transform json object in go struct
+  -     var p2 Person
+        err := json.Unmarshal(barr, &p2)
+
+---
+
+Files
+
+- Linear access, not random (mechanical delay, begin -> end)
+- `io/ioutil` => basic ops
+  - Open => ...
+  - Read => bytes into []byte. opens and closes out of the box
+  -     dat, err:= ioutil.ReadFile("something.txt")
+  - Write => write []byte into file, creating it
+  -     dat = "hey joe"
+        err := ioutil.WriteFile("output.txt", dat, 0777) // unix-like perms
+  - Close => ...
+  - Seek => move read/write head
+- `os` => better package
+  - `os.Open()` => returns a file descriptor(File)
+  - `os.Close()` => ...
+  - `os.Read()` => reads from a file into a []byte
+    - can control the amount read by the size of byte
+    -     f, err := os.Open("test.txt")
+          barr := make([]byte, 10)
+          nb, err := f.Read(barr)
+          f.Close()
+  - `os.Write()` => writes a []byte into a file, controlled size as well
+    -     f, err := os.Create("output.txt")
+          barr := []byte{1,2,3}
+          nb, err := f.Write(barr)
+          // or
+          nb, err := f.WriteString("Hi")

@@ -1,4 +1,4 @@
-Functions
+## Functions
 
 - `Reusability`
 - `Abstraction`
@@ -16,7 +16,7 @@ Functions
 
 ---
 
-Call by Value
+## Call by Value
 
 - Immutable copied argument into the parameter
 - `Advantage` => encapsulation
@@ -24,7 +24,7 @@ Call by Value
 
 ---
 
-Call by Reference (Pointer)
+## Call by Reference (Pointer)
 
 - Mutable pointer
 - `Advantage` => copying time
@@ -32,7 +32,7 @@ Call by Reference (Pointer)
 
 ---
 
-Parameters
+## Parameters
 
 - Passing `Array Pointers`
 
@@ -62,7 +62,7 @@ Parameters
 
 ---
 
-First-Class Values
+## First-Class Values
 
 - Functions can be treated as other types
 
@@ -87,7 +87,7 @@ First-Class Values
 
 ---
 
-Variable Number of Arguments
+## Variable Number of Arguments
 
 - `...` => ellipsis
 -     func maxVal(vals ...int) int {
@@ -101,7 +101,7 @@ Variable Number of Arguments
 
 ---
 
-Deferred Function Calls
+## Deferred Function Calls
 
 -     func main(){
         defer fmt.Println('Bye')
@@ -114,14 +114,13 @@ Deferred Function Calls
 
 ---
 
-OOP
+## OOP
 
 - `Encapsulation` => protecting data exposing only public methods
-- ``
 
 ---
 
-Classes (alike)
+## Classes (alike)
 
 - Associating methods with data
 - Call by value
@@ -156,10 +155,135 @@ Classes (alike)
 
 ---
 
-- Pointer Receivers
+## Pointer Receivers
+
 -     func (self *Point) OffsetX(val float64){
         self.x += v
       }
 - Best practices
   - all methods have pointer receivers
   - non have pointer receivers
+
+---
+
+## Interfaces
+
+- Set of `method signatures`
+- Express conceptual similarities between types
+-     type Shape2D interface {
+        Area() float64
+        Perimeter() float64
+      }
+
+      type Triangle { ... // whatever comes in here }
+
+      func (t Triangle) Area() float64 { ... }
+      func (t Triangle) Perimeter() float64 { ... }
+
+---
+
+## Concrete vs Interfaces Types
+
+- Concrete
+
+  - Exact representation of data and methods
+  - Complete method implementation
+
+- Interface
+
+  - Specify some method signatures
+  - Implementations abstracted
+
+- Interface Values
+
+  - can be assigned to variables
+  - passed, returned
+  - have 2 components:
+    - dynamic type => concrete type which it is assigned to
+    - dynamic value => value of the dynamic type
+  - `Interface value` = (dynamic type, dynamic value)
+  -     type Speaker interface {Speak() string}
+
+        type Dog struct {name: string}
+
+        func (d Dog) Speak() string {fmt.Print(d.name)}
+
+        func main() {
+          var s1 Speaker
+          d1 := Dog('Toby') // dynamic type => Dog
+          s1 = d1           // dynamic value => d1
+          s1.Speak()
+        }
+
+  - May have `nil` dynamic value if equals type Pointers
+  -     var s1 Speaker
+        var d1 *Dog
+        s1 = d1 // has dynamic type (Dog) but no dynamic value (is a pointer...)
+
+---
+
+## Interface uses
+
+- Need a function which takes multiple types of parameters
+-     type Shape2D interface {
+        Area() float64
+        Perimeter() float64
+      }
+
+      type Triangle { ... // whatever comes in here }
+
+      func (t Triangle) Area() float64 { ... }
+      func (t Triangle) Perimeter() float64 { ... }
+
+      type Rectangle { ... }
+
+      func (r Rectangle) Area() float64 { ... }
+      func (r Rectangle) Perimeter() float64 { ... }
+
+      func FitInYard(s Shape2D) bool {
+        if s.Area() < 100 && s.Perimeter < 100 { // random numbers...
+          return true
+        }
+        return false
+      }
+
+- `Empty Interface` => specifies no methods. All types satisfy it
+-     func PrintMe(val interface{}){
+        fmt.Println(val)
+      }
+
+---
+
+## Type Assertions
+
+- Exposing type differences => concrete type, not dynamic
+- Used to disambiguation
+-     func DrawShape(s Shape2D) {
+        rect, ok := s.(Rectangle)
+        if ok {
+          DrawRect(rect)
+        }
+
+        tri, ok := s.(Triangle)
+        if ok {
+          DrawTri(tri)
+        }
+      }
+
+- `Type Switch`
+  -     func DrawShape(s Shape2D) {
+           switch := sh := s.(type){
+             case Rectangle:
+               DrawRect(sh)
+             case Triangle:
+               DrawTri(sh)
+           }
+        }
+
+---
+
+## Error Interface
+
+-     type error interface{
+        Error() string
+      }

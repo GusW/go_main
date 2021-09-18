@@ -1,10 +1,10 @@
-Create new
+## Create new
 
 - $ `go mod init` <path/to/folder>
 
 ---
 
-Workspaces & Packages
+## Workspaces & Packages
 
 - `src` - source code files
 - `pkg` - libs
@@ -12,7 +12,7 @@ Workspaces & Packages
 
 ---
 
-Go Tool
+## Go Tool
 
 - `go build` => compiler
 - `go doc` => docs for a package
@@ -24,7 +24,7 @@ Go Tool
 
 ---
 
-Variables
+## Variables
 
 - `var year, month, day int`
 - `var year int = 2021`
@@ -33,7 +33,7 @@ Variables
 
 ---
 
-Type Declarations
+## Type Declarations
 
 - `type Celsius float64`
 - `var temp Celsius`
@@ -42,7 +42,7 @@ Type Declarations
 
 ---
 
-Pointers
+## Pointers
 
 - address to data in memory
 - `&<pointer>` => returns the address
@@ -56,7 +56,7 @@ Pointers
 
 ---
 
-new()
+## new()
 
 - creates variables and returns pointer
 - initialised as 0 (zero)
@@ -66,7 +66,7 @@ new()
 
 ---
 
-Blocks
+## Blocks
 
 - `{}`
 - Universe block => all Go source
@@ -78,7 +78,7 @@ Blocks
 
 ---
 
-Stack & Heap
+## Stack & Heap
 
 1. `Stack`
 
@@ -93,7 +93,7 @@ Stack & Heap
 
 ---
 
-Garbage Collection
+## Garbage Collection
 
 - Although in the example below the `x := 1` is kept in the Stack memory the pointer reference is returned to the main function thus no deallocation is performed
 -     func foo() *int {
@@ -107,16 +107,16 @@ Garbage Collection
           fmt.Printf("%d", *y)
       }
 
-  ***
+---
 
-Comments
+## Comments
 
 - `// single line comment`
 - `/* block comment */`
 
 ---
 
-Print
+## Print
 
 - `import "fmt"`
 -     x := "yo"
@@ -124,7 +124,7 @@ Print
 
 ---
 
-Integers
+## Integers
 
 - Signed bytes => `int8`, `int16`, `int32`, `int64`
 - Unsigned bytes => `uint8`, `uint16`, `uint32`, `uint64`
@@ -132,7 +132,7 @@ Integers
 
 ---
 
-Type Conversions
+## Type Conversions
 
 -     var x int8 = 1
       var y int16 = 2
@@ -142,14 +142,14 @@ Type Conversions
 
 ---
 
-Floating Point
+## Floating Point
 
 - `float32` => ~ 6 digits of precision
 - `float64` => ~ 15 digits of precision
 
 ---
 
-Strings
+## Strings
 
 - `ASCII` => 8-bit (American)
 - `Unicode` => 32-bit
@@ -181,9 +181,9 @@ Strings
   - `FormatFloat(f, fmt, prec, bitSize)` => Float to string
   - `ParseFloat(s, bitSize)` => String to float
 
-  ***
+---
 
-Constants
+## Constants
 
 -     const x = 1.32
       const (
@@ -204,7 +204,7 @@ Constants
 
 ---
 
-Control Flows
+## Control Flows
 
 - Conditional
 
@@ -244,7 +244,7 @@ Control Flows
 
 ---
 
-Scan
+## Scan
 
 - Captures manually input data
 - Takes a pointer as an arg
@@ -255,7 +255,7 @@ Scan
 
 ---
 
-Arrays
+## Arrays
 
 - Fixed length
 -     var myList [5]int
@@ -274,7 +274,7 @@ Arrays
 
 ---
 
-Slices
+## Slices
 
 - slice of array
 - variable size, up to the size of the array
@@ -307,7 +307,7 @@ Slices
 
 ---
 
-Hash Table
+## Hash Table
 
 - Unique keys
 - `Hashing function` => process the slot for the key
@@ -336,7 +336,7 @@ Hash Table
 
 ---
 
-Structs
+## Structs
 
 - `class`
 -      type Person struct {
@@ -356,7 +356,7 @@ Structs
 
 ---
 
-Packages (RFCs/protocols)
+## Packages (RFCs/protocols)
 
 - `net/http`=> web. `http.Get(www.whatever.com)`
 - `net` => tcp/ip `net.Dial("tcp", "www.hoho.com:8081"`
@@ -371,7 +371,7 @@ Packages (RFCs/protocols)
 
 ---
 
-Files
+## Files
 
 - Linear access, not random (mechanical delay, begin -> end)
 - `io/ioutil` => basic ops

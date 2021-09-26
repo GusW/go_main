@@ -10,22 +10,39 @@ var wg sync.WaitGroup
 var philosEatingMut sync.Mutex
 var philosEating int = 0
 
-func incrementMutTarget(){
+func incrementMutTarget() {
 	philosEatingMut.Lock()
 	philosEating++
 	philosEatingMut.Unlock()
 }
 
-func decrementMutTarget(){
+func decrementMutTarget() {
 	philosEatingMut.Lock()
 	philosEating--
 	philosEatingMut.Unlock()
 }
 
 var ph1ETMut, ph2ETMut, ph3ETMut, ph4ETMut, ph5ETMut sync.Mutex
-var ph1ET, ph2ET, ph3ET, ph4ET, ph5ET int = 0,0,0,0,0
+var ph1ET, ph2ET, ph3ET, ph4ET, ph5ET int = 0, 0, 0, 0, 0
 
-func incrementPhiloEatTimes(philoIdx int){
+func getPhiloEatTimes(philoIdx int) int {
+	switch philoIdx {
+	case 0:
+		return ph1ET
+	case 1:
+		return ph2ET
+	case 2:
+		return ph3ET
+	case 3:
+		return ph4ET
+	case 4:
+		return ph5ET
+	default:
+		return 0
+	}
+}
+
+func incrementPhiloEatTimes(philoIdx int) {
 	switch philoIdx {
 	case 0:
 		ph1ETMut.Lock()
@@ -50,29 +67,12 @@ func incrementPhiloEatTimes(philoIdx int){
 	}
 }
 
-func getPhiloEatTimes(philoIdx int)int{
-	switch philoIdx {
-	case 0:
-		return ph1ET
-	case 1:
-		return ph2ET
-	case 2:
-		return ph3ET
-	case 3:
-		return ph4ET
-	case 4:
-		return ph5ET
-	default:
-		return 0
-	}
-}
-
 var donePhiloIdxs = []int{}
 var donePhilosMut sync.Mutex
 
-func addDonePhilo(philoIdx int){
+func addDonePhilo(philoIdx int) {
 	donePhilosMut.Lock()
-	donePhiloIdxs=append(donePhiloIdxs, philoIdx)
+	donePhiloIdxs = append(donePhiloIdxs, philoIdx)
 	donePhilosMut.Unlock()
 	wg.Done()
 }
@@ -82,21 +82,21 @@ type boolChan chan bool
 type ChopS struct{ sync.Mutex }
 
 type Philo struct {
-	number int
-	leftCS, rightCS  *ChopS
+	number          int
+	leftCS, rightCS *ChopS
 }
 
 func (p Philo) eat(canEat boolChan, philoIdx int) {
-	for ce := range canEat{
-		if ce{
+	for ce := range canEat {
+		if ce {
 			p.leftCS.Lock()
 			p.rightCS.Lock()
-			if getPhiloEatTimes(philoIdx) < 3{
+			if getPhiloEatTimes(philoIdx) < 3 {
 				fmt.Println("start to eat", p.number)
 				incrementMutTarget()
 				incrementPhiloEatTimes(philoIdx)
 				fmt.Println("finishing eating", p.number)
-				if getPhiloEatTimes(philoIdx) == 3{
+				if getPhiloEatTimes(philoIdx) == 3 {
 					addDonePhilo(philoIdx)
 				}
 				decrementMutTarget()
@@ -109,17 +109,17 @@ func (p Philo) eat(canEat boolChan, philoIdx int) {
 
 type Host struct{}
 
-func (h Host) handleDiningPhilos(philos []*Philo){
+func (h Host) handleDiningPhilos(philos []*Philo) {
 	wg.Add(len(philos))
 	canEatChans := make([]boolChan, len(philos))
 
-	for idx := range philos{
+	for idx := range philos {
 		canEatChans[idx] = make(boolChan)
 		go philos[idx].eat(canEatChans[idx], idx)
 	}
 
-	for len(donePhiloIdxs) < len(philos){
-		for idx := range philos{
+	for len(donePhiloIdxs) < len(philos) {
+		for idx := range philos {
 			if philosEating < 2 {
 				canEatChans[idx] <- true
 			}

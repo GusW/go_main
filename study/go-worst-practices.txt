@@ -1,0 +1,10 @@
+Golang Worst Practices
+----------------------
+https://www.youtube.com/watch?v=Jns0QgJtAYY
+-------------------------------------------
+
+1. Avoid Large Interfaces => the bigger the interface, the weaker the abstraction
+    - Deep x Shallow
+
+2. Interface Pollution => precision, only create when really needed
+    - 

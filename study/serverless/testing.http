@@ -1,0 +1,23 @@
+GET {{apiGatewayURI}}
+
+POST {{apiGatewayURI}} HTTP/1.1
+content-type: application/json
+
+{
+    "email": "gustavo.watanabe@gmail.com",
+    "firstName": "Gustavo",
+    "lastName": "Watanabe"
+}
+
+GET {{apiGatewayURI}}?email=gustavo.watanabe@gmail.com
+
+PUT {{apiGatewayURI}} HTTP/1.1
+content-type: application/json
+
+{
+    "email": "gustavo.watanabe@gmail.com",
+    "firstName": "Gustavo",
+    "lastName": "de Assis Watanabe"
+}
+
+DELETE {{apiGatewayURI}}?email=gustavo.watanabe@gmail.com

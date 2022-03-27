@@ -1,5 +1,9 @@
 ## Instructions
 
+#### https://www.softkraft.co/aws-lambda-in-golang/
+
+#### https://www.youtube.com/watch?v=zHcef4eHOc8&t=6s
+
 ---
 
 ```bash
